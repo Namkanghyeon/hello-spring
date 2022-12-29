@@ -9,6 +9,7 @@ import hello.hellospring.service.MemberService;
 // 스프링이 뜰 때 스프링 컨테이너가 생성되는데, 거기에 @Controller 어노테이션이 있으면 해당 컨트롤러 객체를 생성해서 넣어두고 관리를 시작함
 // 이 관리되는 객체를 빈이라고 부름
 // 기본적으로 스프링 빈은 싱글톤으로 관리 (딱 하나만 등록됨)
+
 // 원래는 @Component 어노테이션인데 객체의 목적에 따라 @Controller, @Service, @Repository로 나누어서 붙임
 // (내부에 @Component를 포함하고 있음)
 // @Component 어노테이션이 있으면 컴포넌트 스캔으로 스프링 빈으로 자동 등록됨
