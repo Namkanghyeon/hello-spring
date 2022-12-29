@@ -1,10 +1,13 @@
 package hello.hellospring;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import hello.hellospring.repository.JdbcMemberRepository;
 import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.service.MemberService;
 
 @Configuration
@@ -13,6 +16,14 @@ import hello.hellospring.service.MemberService;
 // 주로 정형화된 빈(컨트롤러, 서비스, 레포지토리)은 컴포넌트 스캔을 이용하고,
 // 상황에 따라 인터페이스의 구현 클래스를 변경해야하는 경우 직접 등록 (설정 파일에서만 바꿔치기하면 되니까)
 public class SpringConfig {
+
+	private DataSource dataSource;
+
+	@Autowired
+	public SpringConfig(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
 	@Bean
 	public MemberService memberService() {
 		return new MemberService(memberRepository());
@@ -20,6 +31,7 @@ public class SpringConfig {
 
 	@Bean
 	public MemberRepository memberRepository() {
-		return new MemoryMemberRepository();
+		// return new MemoryMemberRepository();
+		return new JdbcMemberRepository(dataSource);
 	}
 }
