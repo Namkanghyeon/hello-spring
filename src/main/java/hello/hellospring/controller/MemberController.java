@@ -1,8 +1,14 @@
 package hello.hellospring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import hello.hellospring.domain.Member;
 import hello.hellospring.service.MemberService;
 
 @Controller
@@ -26,5 +32,31 @@ public class MemberController {
 	// 마찬가지로 MemoryMemberRepository 역시 @Repository 어노테이션을 사용해서 빈으로 등록되어 있어야 함
 	public MemberController(MemberService memberService) {
 		this.memberService = memberService;
+	}
+
+	@GetMapping("/members/new")
+	// /members/new 경로로 접속하면 자동으로 GET 요청이 옴
+	public String createForm() {
+		return "members/createMemberForm";
+	}
+
+	@PostMapping("/members/new")
+	// form 태그에서 action 속성을 /members/new, method 속성을 post로 설정해 놓으면 POST 요청이 옴
+	// input 태그의 name="name" 속성이 서버로 넘어올 때 key가 됨 == MemberForm 클래스의 name 변수에 자동으로 넣어줌
+	public String create(MemberForm form){
+		Member member = new Member();
+		member.setName(form.getName());
+
+		memberService.join(member);
+
+		return "redirect:/";
+	}
+
+	@GetMapping("/members")
+	public String list(Model model){
+		List<Member> members = memberService.findMembers();
+		model.addAttribute("members", members);
+		// model의 attribute로 넣어주면 thymeleaf 엔진이 이 데이터를 $()로 꺼내서 html을 생성함
+		return "members/memberList";
 	}
 }
