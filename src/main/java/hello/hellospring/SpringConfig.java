@@ -48,4 +48,10 @@ public class SpringConfig {
 	// 	return new JpaMemberRepository(em);
 	// }
 
+	// @Bean
+	// public TimeTraceAop timeTraceAop() {
+	// 	return new TimeTraceAop();
+	// }
+	// 컴포넌트 스캔으로 안하고 직접 등록하면 순환 참조 에러가 나네?
+
 }
