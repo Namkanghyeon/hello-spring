@@ -6,10 +6,15 @@ import hello.hellospring.repository.MemberRepository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class MemberService { // 클래스 선택하고 cmd + shift + t: 테스트 클래스 자동 생성
 
     private final MemberRepository memberRepository;
 
+    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
