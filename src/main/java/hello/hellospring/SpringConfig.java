@@ -1,12 +1,12 @@
 package hello.hellospring;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import hello.hellospring.repository.JdbcTemplateMemberRepository;
+import hello.hellospring.repository.JpaMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.service.MemberService;
 
@@ -17,11 +17,17 @@ import hello.hellospring.service.MemberService;
 // 상황에 따라 인터페이스의 구현 클래스를 변경해야하는 경우 직접 등록 (설정 파일에서만 바꿔치기하면 되니까)
 public class SpringConfig {
 
-	private DataSource dataSource;
+	// private DataSource dataSource;
+	//
+	// @Autowired
+	// public SpringConfig(DataSource dataSource) {
+	// 	this.dataSource = dataSource;
+	// }
+	private EntityManager em;
 
 	@Autowired
-	public SpringConfig(DataSource dataSource) {
-		this.dataSource = dataSource;
+	public SpringConfig(EntityManager em) {
+		this.em = em;
 	}
 
 	@Bean
@@ -34,7 +40,8 @@ public class SpringConfig {
 		// 구현체만 갈아끼우면 됨
 		// return new MemoryMemberRepository();
 		// return new JdbcMemberRepository(dataSource);
-		return new JdbcTemplateMemberRepository(dataSource);
+		// return new JdbcTemplateMemberRepository(dataSource);
+		return new JpaMemberRepository(em);
 	}
 
 }
