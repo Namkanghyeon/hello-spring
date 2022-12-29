@@ -12,15 +12,15 @@ import java.util.Optional;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DataSourceUtils;
-import org.springframework.stereotype.Repository;
 
 import hello.hellospring.domain.Member;
 
-@Repository
 public class JdbcMemberRepository implements MemberRepository {
 	// JDBC 연결하는 부분은 요즘 안쓰니까 그냥 넘어가기
 	private final DataSource dataSource;
 
+	// @Autowired
+	// 빈 등록을 컴포넌트 스캔 안쓰고 직접 하는 경우 intelliJ가 @Autowired 쓸 때 빨간 줄 그음 (아무 문제 없음)
 	public JdbcMemberRepository(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
